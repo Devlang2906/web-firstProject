@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ matkul.nama }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; min-height: 100vh; }
+        .navbar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 100;
+        }
+        .navbar h1 { color: white; font-size: 1.4em; }
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 260px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 99;
+            padding-top: 80px;
+        }
+        .side-menu.open { right: 0; }
+        .side-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 28px;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: background 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .side-menu a:hover { background: #f0f2f5; border-left-color: #667eea; color: #667eea; }
+        .side-menu a.active { background: #667eea10; border-left-color: #667eea; color: #667eea; }
+        .side-menu .menu-title { padding: 12px 28px; font-size: 0.75em; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 98;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        .overlay.show { opacity: 1; pointer-events: all; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .card { background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+        .card h2 { font-size: 1em; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 10px; }
+        .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            outline: none;
+        }
+        .file-upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        input[type="file"] { display: none; }
+        .file-name { font-size: 0.85em; color: #888; }
+        button[type="submit"] {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            cursor: pointer;
+            width: 100%;
+        }
+        .materi-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: #f8f9ff;
+            border: 1.5px solid #e8eaff;
+            margin-bottom: 10px;
+        }
+        .materi-info { display: flex; align-items: center; gap: 12px; }
+        .materi-icon { font-size: 1.5em; }
+        .materi-nama { font-weight: 600; color: #333; font-size: 0.95em; }
+        .materi-file { font-size: 0.82em; color: #888; }
+        .materi-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-download {
+            padding: 6px 14px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.82em;
+            font-weight: 600;
+        }
+        .btn-hapus {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .btn-hapus:hover { color: #ef4444; }
+        .kosong { text-align: center; color: #aaa; padding: 30px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>📂 {{ matkul.nama }}</h1>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-title">Menu</div>
+        <a href="/">📅 Pengingat Deadline</a>
+        <a href="/matkul" class="active">📁 Mata Kuliah</a>
+        <a href="/contact">📬 Contact Us</a>
+    </div>
+
+    <div class="container">
+        <a href="/matkul" class="back-link">⬅ Kembali ke Mata Kuliah</a>
+
+        <div class="card">
+            <h2>Upload Materi</h2>
+            <form action="/matkul/{{ matkul.id }}/upload" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" name="nama" placeholder="Nama materi..." required>
+                    </div>
+                    <label for="file">
+                        <div class="file-upload-area">📎 Klik untuk pilih file</div>
+                    </label>
+                    <input type="file" id="file" name="file" required>
+                    <div class="file-name" id="file-name">Belum ada file dipilih</div>
+                    <button type="submit">⬆ Upload Materi</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Daftar Materi</h2>
+            {% for materi in matkul.materi %}
+            <div class="materi-item">
+                <div class="materi-info">
+                    <span class="materi-icon">📄</span>
+                    <div>
+                        <div class="materi-nama">{{ materi.nama }}</div>
+                        <div class="materi-file">{{ materi.filename }}</div>
+                    </div>
+                </div>
+                <div class="materi-actions">
+                    <a class="btn-download" href="/materi/file/{{ matkul.id }}/{{ materi.filename }}">⬇ Download</a>
+                    <a class="btn-hapus" href="/materi/hapus/{{ materi.id }}">✕</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="kosong">Belum ada materi. Upload file pertamamu!</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sideMenu.classList.toggle('open');
+            overlay.classList.toggle('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+
+        document.getElementById('file').addEventListener('change', function() {
+            var name = this.files[0] ? this.files[0].name : 'Belum ada file dipilih';
+            document.getElementById('file-name').textContent = '📎 ' + name;
+        });
+    </script>
+</body>
+</html>

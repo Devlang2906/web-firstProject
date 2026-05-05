@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ produk.nama }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .navbar {
+            background: linear-gradient(135deg, #225888, #225888);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .navbar h1 { color: white; font-size: 1.4em; }
+        .navbar a { color: white; text-decoration: none; font-size: 0.9em; opacity: 0.85; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #225888;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        }
+        .foto-container {
+            width: 100%;
+            height: 320px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+            color: #ccc;
+        }
+        .foto-container img { width: 100%; height: 320px; object-fit: cover; }
+        .card-body { padding: 28px; }
+        .produk-nama { font-size: 1.6em; font-weight: 700; color: #222; margin-bottom: 8px; }
+        .produk-harga { font-size: 1.8em; font-weight: 700; color: #225888; margin-bottom: 16px; }
+        .produk-deskripsi {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .kontak-title { font-size: 0.85em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+        .kontak-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+        .kontak-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: opacity 0.2s;
+        }
+        .kontak-item:hover { opacity: 0.85; }
+        .kontak-wa { background: #dcfce7; color: #16a34a; }
+        .kontak-ig { background: #fce7f3; color: #db2777; }
+        .kontak-tt { background: #f0f0f0; color: #333; }
+        .hapus-btn {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border: 1.5px solid #fee2e2;
+            border-radius: 10px;
+            color: #ef4444;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .hapus-btn:hover { background: #fee2e2; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1> Detail Produk </h1>
+        <a href="/">⬅ Kembali</a>
+    </div>
+
+    <div class="container">
+        <a href="/" class="back-link">⬅ Kembali ke semua iklan</a>
+
+        <div class="card">
+            <div class="foto-container">
+                {% if produk.foto %}
+                <img src="/foto/{{ produk.foto }}" alt="{{ produk.nama }}">
+                {% else %}
+                📦
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+               <div class="produk-nama">{{ produk.nama }}</div>
+                <div style="font-size:0.9em; color:#888; margin-bottom:8px;">👤 {{ produk.nama_penjual }}</div>
+                <div class="produk-harga">Rp {{ produk.harga }}</div>
+                <div class="produk-deskripsi">{{ produk.deskripsi }}</div>
+
+                <div class="kontak-title">Hubungi Penjual</div>
+                <div class="kontak-list">
+                    {% if produk.whatsapp %}
+                    <a href="https://wa.me/{{ produk.whatsapp }}" target="_blank" class="kontak-item kontak-wa">
+                        💬 WhatsApp — {{ produk.whatsapp }}
+                    </a>
+                    {% endif %}
+                    {% if produk.instagram %}
+                    <a href="https://instagram.com/{{ produk.instagram }}" target="_blank" class="kontak-item kontak-ig">
+                        📸 Instagram — @{{ produk.instagram }}
+                    </a>
+                    {% endif %}
+                    {% if produk.tiktok %}
+                    <a href="https://tiktok.com/@{{ produk.tiktok }}" target="_blank" class="kontak-item kontak-tt">
+                        🎵 TikTok — @{{ produk.tiktok }}
+                    </a>
+                    {% endif %}
+                </div>
+
+                <a href="/hapus/{{ produk.id }}" class="hapus-btn" onclick="return confirm('Hapus iklan ini?')">🗑 Hapus Iklan</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
