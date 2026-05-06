@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import os
@@ -70,16 +70,10 @@ def hapus_produk(id):
     return redirect(url_for('index'))
 
 @app.route("/foto/<filename>")
-def foto(filename):
-    from flask import send_from_directory
+def serve_foto(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-from flask import send_from_directory
 
-@app.route('/uploads/<filename>')
-def foto(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
-    
+    app.run(debug=True, host='0.0.0.0')
