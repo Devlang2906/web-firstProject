@@ -3,123 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle Universitas Pasundan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Unpas Trade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-       body { font-family: 'Inter', sans-serif; background-image: url('/foto/Foto Unpas Background.jpg'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
         .navbar {
-            background: linear-gradient(135deg, #225888, #225888);
+            background: white;
             padding: 16px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .navbar h1 { color: white; font-size: 1.4em; }
-        .navbar a {
-            background: rgb(255, 255, 255);
-            color: #225888;
-            padding: 8px 20px;
+        .navbar-logo { font-size: 1.4em; font-weight: 800; color: #1e40af; text-decoration: none; }
+        .navbar-logo span { color: #f97316; }
+        .navbar-menu { display: flex; gap: 28px; align-items: center; }
+        .navbar-menu a { color: #555; text-decoration: none; font-size: 0.9em; font-weight: 500; }
+        .navbar-menu a:hover { color: #1e40af; }
+        .btn-jual {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white !important;
+            padding: 9px 22px;
+            border-radius: 8px;
+            font-weight: 700 !important;
+        }
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            padding: 100px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
             border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .hero h1 { font-size: 2.8em; font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+        .hero h1 span { color: #f97316; }
+        .hero p { font-size: 1em; opacity: 0.85; max-width: 500px; margin: 0 auto 32px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            background: #f97316;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .hero h2 { font-size: 1.8em; color: #222; margin-bottom: 8px; }
-        .hero p { color: #000000; font-size: 0.95em; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background: rgb(255, 255, 255);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 10px;
             text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-        .card-foto {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3em;
-            color: #000000;
-        }
-        .card-foto img { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 16px; }
-        .card-nama { font-weight: 700; font-size: 1em; color: #222; margin-bottom: 4px; }
-        .card-deskripsi { font-size: 0.85em; color: #000000; margin-bottom: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .card-harga { font-size: 1.1em; font-weight: 700; color: #225888; }
-        .card-kontak { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
-        .badge-kontak {
-            font-size: 0.75em;
-            padding: 3px 10px;
-            border-radius: 20px;
             font-weight: 600;
+            font-size: 0.95em;
+            backdrop-filter: blur(10px);
         }
-        .badge-wa { background: #dcfce7; color: #16a34a; }
-        .badge-ig { background: #fce7f3; color: #db2777; }
-        .badge-tt { background: #f0f0f0; color: #333; }
-        .kosong { text-align: center; color: #000000; padding: 60px; grid-column: 1/-1; }
-        .kosong .icon { font-size: 3em; margin-bottom: 12px; }
+        .fitur-section { padding: 60px 40px; max-width: 1100px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 1.6em; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+        .section-title p { color: #888; font-size: 0.95em; }
+        .fitur-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .fitur-card { background: linear-gradient(135deg, #1e40af, #2563eb); border-radius: 16px; padding: 24px; color: white; }
+        .fitur-icon { font-size: 2em; margin-bottom: 12px; }
+        .fitur-card h3 { font-size: 1em; font-weight: 700; margin-bottom: 8px; }
+        .fitur-card p { font-size: 0.85em; opacity: 0.85; line-height: 1.6; }
+        .footer { background: #1e293b; color: white; text-align: center; padding: 24px; font-size: 0.85em; opacity: 0.8; }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <h1>Recycle Unpas</h1>
-        <a href="/posting"> Upload Sekarang</a>
+        <a href="/" class="navbar-logo">Unpas<span>Trade</span></a>
+        <div class="navbar-menu">
+            <a href="/">Beranda</a>
+            <a href="/produk">Produk</a>
+            <a href="/posting" class="btn-jual">+ Jual Sekarang</a>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="hero">
-            <h2>Temukan Barang yang Kamu Cari</h2>
-            <p>Platform Universitas Pasundan Untuk Mempermudah Jual Beli Kebutuhan Mahasiswa!</p>
+    <div class="hero">
+        <div class="hero-badge">🎓 Platform Jual Beli Mahasiswa Unpas</div>
+        <h1>Jual & Beli dengan<br><span>Mudah dan Aman</span></h1>
+        <p>Satu tempat untuk semua kebutuhan mahasiswa Unpas — jual barang bekasmu, temukan penawaran terbaik!</p>
+        <div class="hero-buttons">
+            <a href="/posting" class="btn-primary">🚀 Mulai Jual Sekarang</a>
+            <a href="/produk" class="btn-secondary">🔍 Lihat Produk</a>
         </div>
+    </div>
 
-        <div class="grid">
-            {% for produk in produk_list %}
-            <a href="/produk/{{ produk.id }}" class="card">
-                <div class="card-foto">
-                    {% if produk.foto %}
-                    <img src="/foto/{{ produk.foto }}" alt="{{ produk.nama }}">
-                    {% else %}
-                    📦
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <div class="card-nama">{{ produk.nama }}</div>
-                    <div class="card-deskripsi">{{ produk.deskripsi }}</div>
-                    <div class="card-harga">Rp {{ produk.harga }}</div>
-                    <div class="card-kontak">
-                        {% if produk.whatsapp %}<span class="badge-kontak badge-wa"><img src="/uploads/WA_LOGO.jpg" width="10"> WA</span>{% endif %}
-                        {% if produk.instagram %}<span class="badge-kontak badge-ig">📸 IG</span>{% endif %}
-                        {% if produk.tiktok %}<span class="badge-kontak badge-tt">🎵 TT</span>{% endif %}
-                    </div>
-                </div>
-            </a>
-            {% else %}
-            <div class="kosong">
-                <div class="icon"></div>
-                <p>Belum ada iklan. Jadilah yang pertama posting!</p>
-            </div>
-            {% endfor %}
+    <div class="fitur-section">
+        <div class="section-title">
+            <h2>Kenapa Unpas Trade?</h2>
+            <p>Platform yang dirancang khusus untuk mahasiswa Unpas</p>
         </div>
+        <div class="fitur-grid">
+            <div class="fitur-card">
+                <div class="fitur-icon">✅</div>
+                <h3>Gratis & Mudah</h3>
+                <p>Posting iklan gratis tanpa perlu daftar akun. Langsung tampil!</p>
+            </div>
+            <div class="fitur-card">
+                <div class="fitur-icon">📸</div>
+                <h3>Upload Foto</h3>
+                <p>Tampilkan foto produkmu agar pembeli lebih yakin.</p>
+            </div>
+            <div class="fitur-card">
+                <div class="fitur-icon">💬</div>
+                <h3>Kontak Langsung</h3>
+                <p>Pembeli langsung hubungi lewat WA, Instagram, atau TikTok.</p>
+            </div>
+            <div class="fitur-card">
+                <div class="fitur-icon">🎓</div>
+                <h3>Khusus Mahasiswa</h3>
+                <p>Komunitas jual beli sesama mahasiswa Unpas yang terpercaya.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 UnpasTrade — Platform Jual Beli Mahasiswa Universitas Pasundan
     </div>
 </body>
 </html>
