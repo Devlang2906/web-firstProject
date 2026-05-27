@@ -3,62 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ produk.nama }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>{{ produk.nama }} — Unpas Trade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f5f5f5; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
         .navbar {
-            background: linear-gradient(135deg, #225888, #225888);
+            background: white;
             padding: 16px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .navbar h1 { color: white; font-size: 1.4em; }
-        .navbar a { color: white; text-decoration: none; font-size: 0.9em; opacity: 0.85; }
-        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #225888;
-            text-decoration: none;
-            font-size: 0.9em;
-            margin-bottom: 20px;
+        .navbar-logo { font-size: 1.4em; font-weight: 800; color: #1e40af; text-decoration: none; }
+        .navbar-logo span { color: #f97316; }
+        .navbar-menu { display: flex; gap: 28px; align-items: center; }
+        .navbar-menu a { color: #555; text-decoration: none; font-size: 0.9em; font-weight: 500; }
+        .navbar-menu a:hover { color: #1e40af; }
+        .btn-jual {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white !important;
+            padding: 9px 22px;
+            border-radius: 8px;
+            font-weight: 700 !important;
         }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px 60px; }
+        .back-link { display: inline-flex; align-items: center; gap: 6px; color: #1e40af; text-decoration: none; font-size: 0.9em; margin-bottom: 20px; font-weight: 600; }
         .back-link:hover { text-decoration: underline; }
-        .card {
-            background: white;
+
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+        /* FOTO */
+        .foto-main {
+            width: 100%;
+            aspect-ratio: 1;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-        }
-        .foto-container {
-            width: 100%;
-            height: 320px;
             background: #f0f0f0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 5em;
             color: #ccc;
+            margin-bottom: 10px;
         }
-        .foto-container img { width: 100%; height: 320px; object-fit: cover; }
-        .card-body { padding: 28px; }
-        .produk-nama { font-size: 1.6em; font-weight: 700; color: #222; margin-bottom: 8px; }
-        .produk-harga { font-size: 1.8em; font-weight: 700; color: #225888; margin-bottom: 16px; }
-        .produk-deskripsi {
-            color: #555;
-            font-size: 0.95em;
-            line-height: 1.7;
-            margin-bottom: 28px;
-            padding-bottom: 28px;
-            border-bottom: 1px solid #f0f0f0;
+        .foto-main img { width: 100%; height: 100%; object-fit: cover; }
+        .foto-thumbnails { display: flex; gap: 8px; flex-wrap: wrap; }
+        .foto-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.2s;
         }
-        .kontak-title { font-size: 0.85em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
-        .kontak-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+        .foto-thumb:hover, .foto-thumb.active { border-color: #1e40af; }
+        .foto-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* INFO */
+        .info-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+        .produk-nama { font-size: 1.5em; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+        .produk-penjual { font-size: 0.9em; color: #888; margin-bottom: 12px; }
+        .produk-badges { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .badge { font-size: 0.78em; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        .badge-kategori { background: #eff6ff; color: #1e40af; }
+        .badge-baru { background: #dcfce7; color: #16a34a; }
+        .badge-bekas { background: #fef3c7; color: #d97706; }
+        .produk-harga { font-size: 2em; font-weight: 800; color: #1e40af; margin-bottom: 16px; }
+        .divider { border: none; border-top: 1px solid #f0f0f0; margin: 16px 0; }
+        .produk-deskripsi { color: #555; font-size: 0.95em; line-height: 1.7; margin-bottom: 20px; }
+
+        .kontak-title { font-size: 0.82em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .kontak-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .kontak-item {
             display: flex;
             align-items: center;
@@ -67,7 +88,7 @@
             border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95em;
+            font-size: 0.9em;
             transition: opacity 0.2s;
         }
         .kontak-item:hover { opacity: 0.85; }
@@ -87,30 +108,66 @@
             transition: background 0.2s;
         }
         .hapus-btn:hover { background: #fee2e2; }
+
+        .footer { background: #1e293b; color: white; text-align: center; padding: 24px; font-size: 0.85em; opacity: 0.8; margin-top: 60px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar { padding: 14px 20px; }
+            .navbar-menu { gap: 14px; }
+            .navbar-menu a:not(.btn-jual) { display: none; }
+            .btn-jual { padding: 8px 16px; font-size: 0.85em; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .container { margin: 24px auto; padding: 0 16px 40px; }
+            .produk-harga { font-size: 1.5em; }
+            .produk-nama { font-size: 1.2em; }
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <h1> Detail Produk </h1>
-        <a href="/">⬅ Kembali</a>
+        <a href="/" class="navbar-logo">Unpas<span>Trade</span></a>
+        <div class="navbar-menu">
+            <a href="/">Beranda</a>
+            <a href="/produk">Produk</a>
+            <a href="/posting" class="btn-jual">+ Jual Sekarang</a>
+        </div>
     </div>
 
     <div class="container">
-        <a href="/" class="back-link">⬅ Kembali ke semua iklan</a>
+        <a href="/produk" class="back-link">⬅ Kembali ke Produk</a>
 
-        <div class="card">
-            <div class="foto-container">
-                {% if produk.foto %}
-                <img src="/foto/{{ produk.foto }}" alt="{{ produk.nama }}">
-                {% else %}
-                📦
+        <div class="detail-grid">
+            <!-- FOTO -->
+            <div>
+                <div class="foto-main" id="fotoMain">
+                    {% if produk.foto_list %}
+                    <img src="/foto/{{ produk.foto_list[0] }}" id="mainImg" alt="{{ produk.nama }}">
+                    {% else %}
+                    📦
+                    {% endif %}
+                </div>
+                {% if produk.foto_list|length > 1 %}
+                <div class="foto-thumbnails">
+                    {% for foto in produk.foto_list %}
+                    <div class="foto-thumb {% if loop.first %}active{% endif %}" onclick="gantiPhoto('/foto/{{ foto }}', this)">
+                        <img src="/foto/{{ foto }}" alt="">
+                    </div>
+                    {% endfor %}
+                </div>
                 {% endif %}
             </div>
 
-            <div class="card-body">
-               <div class="produk-nama">{{ produk.nama }}</div>
-                <div style="font-size:0.9em; color:#888; margin-bottom:8px;">👤 {{ produk.nama_penjual }}</div>
+            <!-- INFO -->
+            <div class="info-card">
+                <div class="produk-nama">{{ produk.nama }}</div>
+                <div class="produk-penjual">👤 {{ produk.nama_penjual }}</div>
+                <div class="produk-badges">
+                    {% if produk.kategori %}<span class="badge badge-kategori">{{ produk.kategori }}</span>{% endif %}
+                    {% if produk.kondisi == 'Baru' %}<span class="badge badge-baru">✨ Baru</span>{% elif produk.kondisi == 'Bekas' %}<span class="badge badge-bekas">♻️ Bekas</span>{% endif %}
+                </div>
                 <div class="produk-harga">Rp {{ produk.harga }}</div>
+                <hr class="divider">
                 <div class="produk-deskripsi">{{ produk.deskripsi }}</div>
 
                 <div class="kontak-title">Hubungi Penjual</div>
@@ -131,10 +188,21 @@
                     </a>
                     {% endif %}
                 </div>
-
                 <a href="/hapus/{{ produk.id }}" class="hapus-btn" onclick="return confirm('Hapus iklan ini?')">🗑 Hapus Iklan</a>
             </div>
         </div>
     </div>
+
+    <div class="footer">
+        © 2026 UnpasTrade — Platform Jual Beli Mahasiswa Universitas Pasundan
+    </div>
+
+    <script>
+        function gantiPhoto(src, el) {
+            document.getElementById('mainImg').src = src;
+            document.querySelectorAll('.foto-thumb').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+    </script>
 </body>
 </html>

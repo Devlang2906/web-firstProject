@@ -24,20 +24,12 @@
         .navbar-menu { display: flex; gap: 28px; align-items: center; }
         .navbar-menu a { color: #555; text-decoration: none; font-size: 0.9em; font-weight: 500; }
         .btn-back { color: #1e40af !important; font-weight: 600 !important; }
-
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px 60px; }
         .page-title { margin-bottom: 28px; }
         .page-title h1 { font-size: 1.8em; font-weight: 800; color: #1e293b; }
         .page-title p { color: #888; font-size: 0.9em; margin-top: 4px; }
-
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-        .section-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-        }
+        .section-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
         .section-card.full { grid-column: 1 / -1; }
         .section-header {
             background: linear-gradient(135deg, #1e40af, #2563eb);
@@ -48,7 +40,6 @@
             font-size: 0.95em;
             margin-bottom: 20px;
         }
-
         .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
         .field:last-child { margin-bottom: 0; }
         .field label { font-size: 0.82em; font-weight: 600; color: #555; }
@@ -64,7 +55,6 @@
         }
         .field input:focus, .field textarea:focus, .field select:focus { border-color: #1e40af; }
         .field textarea { resize: vertical; min-height: 100px; }
-
         .prefix-wrap {
             display: flex;
             align-items: center;
@@ -74,18 +64,9 @@
             transition: border 0.2s;
         }
         .prefix-wrap:focus-within { border-color: #1e40af; }
-        .prefix-wrap span {
-            padding: 10px 12px;
-            background: #f5f5f5;
-            color: #888;
-            font-size: 0.85em;
-            border-right: 1.5px solid #e0e0e0;
-            white-space: nowrap;
-        }
+        .prefix-wrap span { padding: 10px 12px; background: #f5f5f5; color: #888; font-size: 0.85em; border-right: 1.5px solid #e0e0e0; white-space: nowrap; }
         .prefix-wrap input { border: none; border-radius: 0; flex: 1; padding: 10px 12px; }
         .prefix-wrap input:focus { border: none; }
-
-        /* FOTO UPLOAD */
         .foto-drop {
             border: 2px dashed #1e40af;
             border-radius: 12px;
@@ -100,43 +81,14 @@
         .foto-drop h3 { font-size: 1em; font-weight: 700; color: #1e40af; margin-bottom: 4px; }
         .foto-drop p { font-size: 0.82em; color: #888; }
         input[type="file"] { display: none; }
-
-        .foto-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .foto-preview-item {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            aspect-ratio: 1;
-        }
-        .foto-preview-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* KONDISI */
+        .foto-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-top: 12px; }
+        .foto-preview-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1; }
+        .foto-preview-item img { width: 100%; height: 100%; object-fit: cover; }
         .kondisi-group { display: flex; gap: 10px; }
-        .kondisi-btn {
-            flex: 1;
-            padding: 10px;
-            border: 1.5px solid #e0e0e0;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.88em;
-            font-weight: 600;
-            color: #888;
-            transition: all 0.2s;
-        }
+        .kondisi-btn { flex: 1; padding: 10px; border: 1.5px solid #e0e0e0; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.88em; font-weight: 600; color: #888; transition: all 0.2s; }
         .kondisi-btn.active-baru { border-color: #16a34a; background: #dcfce7; color: #16a34a; }
         .kondisi-btn.active-bekas { border-color: #d97706; background: #fef3c7; color: #d97706; }
         input[name="kondisi"] { display: none; }
-
         .submit-btn {
             width: 100%;
             padding: 14px;
@@ -152,6 +104,20 @@
             transition: opacity 0.2s;
         }
         .submit-btn:hover { opacity: 0.9; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar { padding: 14px 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .section-card.full { grid-column: 1; }
+            .container { margin: 24px auto; padding: 0 16px 40px; }
+            .page-title h1 { font-size: 1.4em; }
+            .foto-drop { padding: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .kondisi-group { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -170,8 +136,6 @@
 
         <form action="/posting" method="POST" enctype="multipart/form-data">
             <div class="form-grid">
-
-                <!-- FOTO -->
                 <div class="section-card full">
                     <div class="section-header">📸 Foto Produk</div>
                     <label for="fotos">
@@ -185,7 +149,6 @@
                     <div class="foto-preview-grid" id="previewGrid"></div>
                 </div>
 
-                <!-- JUDUL PRODUK -->
                 <div class="section-card">
                     <div class="section-header">📦 Judul Produk</div>
                     <div class="field">
@@ -212,7 +175,6 @@
                     </div>
                 </div>
 
-                <!-- DETAIL PRODUK -->
                 <div class="section-card">
                     <div class="section-header">📋 Detail Produk</div>
                     <div class="field">
@@ -229,7 +191,6 @@
                     </div>
                 </div>
 
-                <!-- HARGA -->
                 <div class="section-card">
                     <div class="section-header">💰 Harga</div>
                     <div class="field">
@@ -241,7 +202,6 @@
                     </div>
                 </div>
 
-                <!-- KONTAK -->
                 <div class="section-card">
                     <div class="section-header">📞 Kontak Penjual</div>
                     <div class="field">
@@ -266,14 +226,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <button type="submit" class="submit-btn">🚀 Terbitkan Produk</button>
         </form>
     </div>
 
     <script>
-        // Preview foto
         document.getElementById('fotos').addEventListener('change', function() {
             const grid = document.getElementById('previewGrid');
             grid.innerHTML = '';
@@ -290,7 +248,6 @@
             });
         });
 
-        // Kondisi
         function pilihKondisi(val) {
             document.getElementById('kondisiInput').value = val;
             document.getElementById('btnBaru').className = 'kondisi-btn' + (val === 'Baru' ? ' active-baru' : '');
