@@ -8,12 +8,6 @@ import json
 import cloudinary
 import cloudinary.uploader
 
-cloudinary.config(
-    cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddd6kptid'),
-    api_key = os.environ.get('CLOUDINARY_API_KEY', '128335663815891'),
-    api_secret = os.environ.get('CLOUDINARY_API_SECRET', '8KHs5t4eNnE6xBLfjIKidEz1CbA
-)
-
 app = Flask(__name__)
 import os
 database_url = os.environ.get('DATABASE_URL', 'postgresql://postgres:Gilang123@localhost:5432/unpas_db')
