@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f8fafc; }
         .navbar {
-            background: linear-gradient(to left, #696969, #cfcfcf)
+            background: linear-gradient(to left, #696969, #cfcfcf);
             padding: 16px 40px;
             display: flex;
             justify-content: space-between;
@@ -142,7 +142,7 @@
             <div>
                 <div class="foto-main" id="fotoMain">
                     {% if produk.foto_list %}
-                    <img src="/foto/{{ produk.foto_list[0] }}" id="mainImg" alt="{{ produk.nama }}">
+                    <img src="{{ produk.foto_list[0] }}" id="mainImg" alt="{{ produk.nama }}">
                     {% else %}
                     📦
                     {% endif %}
@@ -150,8 +150,8 @@
                 {% if produk.foto_list|length > 1 %}
                 <div class="foto-thumbnails">
                     {% for foto in produk.foto_list %}
-                    <div class="foto-thumb {% if loop.first %}active{% endif %}" onclick="gantiPhoto('/foto/{{ foto }}', this)">
-                        <img src="/foto/{{ foto }}" alt="">
+                    <div class="foto-thumb {% if loop.first %}active{% endif %}" onclick="gantiPhoto('{{ foto }}', this)">
+                        <img src="{{ foto }}" alt="">
                     </div>
                     {% endfor %}
                 </div>
