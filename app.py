@@ -81,13 +81,15 @@ def posting():
         tiktok = request.form.get('tiktok', '')
         nim_penjual = session.get('nim', None)
 
-        foto_filenames = []
+      foto_filenames = []
         files = request.files.getlist('fotos')
         for file in files:
-            if file and file.filename != '' and allowed_file(file.filename):
-                result = cloudinary.uploader.upload(file)
-                foto_filenames.append(result['secure_url'])
-
+            if file and file.filename != '':
+                try:
+                    result = cloudinary.uploader.upload(file)
+                    foto_filenames.append(result['secure_url'])
+                except Exception as e:
+                    print(f"Upload error: {e}")
         produk_baru = Produk(
             nama=nama, nama_penjual=nama_penjual,
             nim_penjual=nim_penjual,
