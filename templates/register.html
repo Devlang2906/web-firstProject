@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar — Unpas Trade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .logo {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+        .logo span { color: #f97316; }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 32px;
+        }
+        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .field label { font-size: 0.85em; font-weight: 600; color: #555; }
+        .field input {
+            padding: 12px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .field input:focus { border-color: #1e40af; }
+        .field .hint { font-size: 0.78em; color: #aaa; }
+        .error {
+            background: #fee2e2;
+            color: #ef4444;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            margin-bottom: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.88em;
+            color: #888;
+        }
+        .link a { color: #1e40af; font-weight: 600; text-decoration: none; }
+        .link a:hover { text-decoration: underline; }
+        .back {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.85em;
+        }
+        .back a { color: #888; text-decoration: none; }
+        .back a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">Unpas<span>Trade</span></div>
+        <div class="subtitle">Daftar akun dengan NIM kamu</div>
+
+        {% if error %}
+        <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form action="/register" method="POST">
+            <div class="field">
+                <label>NIM</label>
+                <input type="text" name="nim" placeholder="Contoh: 123456789" required>
+                <span class="hint">NIM harus berupa angka</span>
+            </div>
+            <div class="field">
+                <label>Nama Lengkap</label>
+                <input type="text" name="nama" placeholder="Nama lengkap kamu..." required>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Buat password..." required>
+            </div>
+            <button type="submit" class="btn">📝 Daftar Sekarang</button>
+        </form>
+
+        <div class="link">
+            Sudah punya akun? <a href="/login">Masuk di sini</a>
+        </div>
+        <div class="back">
+            <a href="/">⬅ Kembali ke Beranda</a>
+        </div>
+    </div>
+</body>
+</html>

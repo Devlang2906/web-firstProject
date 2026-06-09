@@ -1,27 +1,39 @@
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import json
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+import os
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://postgres:Gilang123@localhost:5432/unpas_db')
 app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['SECRET_KEY'] = 'unpastrade2026'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 db = SQLAlchemy(app)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# Model User
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nim = db.Column(db.String(20), unique=True, nullable=False)
+    nama = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+
+# Model Produk
 class Produk(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(200), nullable=False)
     nama_penjual = db.Column(db.String(200), nullable=False)
+    nim_penjual = db.Column(db.String(20), nullable=True)
     deskripsi = db.Column(db.Text, nullable=False)
     harga = db.Column(db.String(100), nullable=False)
     kategori = db.Column(db.String(100), nullable=True)
     kondisi = db.Column(db.String(50), nullable=True)
-    fotos = db.Column(db.Text, nullable=True)  # JSON list foto
+    fotos = db.Column(db.Text, nullable=True)
     whatsapp = db.Column(db.String(50), nullable=True)
     instagram = db.Column(db.String(100), nullable=True)
     tiktok = db.Column(db.String(100), nullable=True)
@@ -37,16 +49,18 @@ class Produk(db.Model):
         lst = self.foto_list
         return lst[0] if lst else None
 
+# Halaman utama
 @app.route("/")
 def index():
-    produk_list = Produk.query.order_by(Produk.id.desc()).all()
-    return render_template("index.html", produk_list=produk_list)
+    return render_template("index.html")
 
+# Halaman produk
 @app.route("/produk")
 def semua_produk():
     produk_list = Produk.query.order_by(Produk.id.desc()).all()
     return render_template("produk.html", produk_list=produk_list)
 
+# Posting iklan
 @app.route("/posting", methods=["GET", "POST"])
 def posting():
     if request.method == "POST":
@@ -59,6 +73,7 @@ def posting():
         whatsapp = request.form.get('whatsapp', '')
         instagram = request.form.get('instagram', '')
         tiktok = request.form.get('tiktok', '')
+        nim_penjual = session.get('nim', None)
 
         foto_filenames = []
         files = request.files.getlist('fotos')
@@ -70,6 +85,7 @@ def posting():
 
         produk_baru = Produk(
             nama=nama, nama_penjual=nama_penjual,
+            nim_penjual=nim_penjual,
             deskripsi=deskripsi, harga=harga,
             kategori=kategori, kondisi=kondisi,
             fotos=json.dumps(foto_filenames),
@@ -77,24 +93,77 @@ def posting():
         )
         db.session.add(produk_baru)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('semua_produk'))
     return render_template("posting.html")
 
+# Detail produk
 @app.route("/produk/<int:id>")
 def detail_produk(id):
     produk = Produk.query.get_or_404(id)
-    return render_template("detail_produk.html", produk=produk)
+    nim_login = session.get('nim', None)
+    bisa_hapus = nim_login and nim_login == produk.nim_penjual
+    return render_template("detail_produk.html", produk=produk, bisa_hapus=bisa_hapus)
 
+# Hapus produk
 @app.route("/hapus/<int:id>")
 def hapus_produk(id):
     produk = Produk.query.get_or_404(id)
-    db.session.delete(produk)
-    db.session.commit()
-    return redirect(url_for('index'))
+    nim_login = session.get('nim', None)
+    if nim_login and nim_login == produk.nim_penjual:
+        db.session.delete(produk)
+        db.session.commit()
+    return redirect(url_for('semua_produk'))
 
+# Serve foto
 @app.route("/foto/<filename>")
 def serve_foto(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+# Register
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        nim = request.form.get('nim', '')
+        nama = request.form.get('nama', '')
+        password = request.form.get('password', '')
+
+        if not nim.isdigit():
+            return render_template("register.html", error="NIM harus berupa angka!")
+
+        existing = User.query.filter_by(nim=nim).first()
+        if existing:
+            return render_template("register.html", error="NIM sudah terdaftar!")
+
+        user_baru = User(
+            nim=nim,
+            nama=nama,
+            password=generate_password_hash(password)
+        )
+        db.session.add(user_baru)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template("register.html")
+
+# Login
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        nim = request.form.get('nim', '')
+        password = request.form.get('password', '')
+
+        user = User.query.filter_by(nim=nim).first()
+        if user and check_password_hash(user.password, password):
+            session['nim'] = user.nim
+            session['nama'] = user.nama
+            return redirect(url_for('index'))
+        return render_template("login.html", error="NIM atau password salah!")
+    return render_template("login.html")
+
+# Logout
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     with app.app_context():

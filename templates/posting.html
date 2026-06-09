@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posting Iklan — Unpas Trade</title>
+    <title>Posting Iklan</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(to right, #696969, #cfcfcf); }
         .navbar {
-            background: white;
+            background: linear-gradient(to left, #696969, #cfcfcf); /* kolom unpas */
             padding: 16px 40px;
             display: flex;
             justify-content: space-between;
@@ -19,21 +19,21 @@
             top: 0;
             z-index: 100;
         }
-        .navbar-logo { font-size: 1.4em; font-weight: 800; color: #1e40af; text-decoration: none; }
-        .navbar-logo span { color: #f97316; }
+        .navbar-logo { font-size: 1.4em; font-weight: 800; color: #ffffff; text-decoration: none; }
+        .navbar-logo span { color: #000000; }
         .navbar-menu { display: flex; gap: 28px; align-items: center; }
-        .navbar-menu a { color: #555; text-decoration: none; font-size: 0.9em; font-weight: 500; }
-        .btn-back { color: #1e40af !important; font-weight: 600 !important; }
+        .navbar-menu a { color: #000000; text-decoration: none; font-size: 0.9em; font-weight: 500; }
+        .btn-back { color: #cfcfcf !important; font-weight: 600 !important; }
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px 60px; }
         .page-title { margin-bottom: 28px; }
         .page-title h1 { font-size: 1.8em; font-weight: 800; color: #1e293b; }
-        .page-title p { color: #888; font-size: 0.9em; margin-top: 4px; }
+        .page-title p { color: #000000; font-size: 0.9em; margin-top: 4px; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .section-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+        .section-card { background: linear-gradient(to right, #b8b7b7, #ececec); border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
         .section-card.full { grid-column: 1 / -1; }
         .section-header {
-            background: linear-gradient(135deg, #1e40af, #2563eb);
-            color: white;
+            background: linear-gradient(to left, #696969, #cfcfcf);
+            color: black;
             padding: 12px 18px;
             border-radius: 10px;
             font-weight: 700;
@@ -51,7 +51,7 @@
             font-size: 0.92em;
             outline: none;
             transition: border 0.2s;
-            background: white;
+            background: linear-gradient(to left, #b8b7b7, #ececec);
         }
         .field input:focus, .field textarea:focus, .field select:focus { border-color: #1e40af; }
         .field textarea { resize: vertical; min-height: 100px; }
@@ -63,12 +63,12 @@
             overflow: hidden;
             transition: border 0.2s;
         }
-        .prefix-wrap:focus-within { border-color: #1e40af; }
-        .prefix-wrap span { padding: 10px 12px; background: #f5f5f5; color: #888; font-size: 0.85em; border-right: 1.5px solid #e0e0e0; white-space: nowrap; }
+        .prefix-wrap:focus-within { border-color: #0000; }
+        .prefix-wrap span { padding: 10px 12px; background: #f5f5f5; color: #888; font-size: 0.85em; border-right: 1.5px solid #e0e0e0; black-space: nowrap; }
         .prefix-wrap input { border: none; border-radius: 0; flex: 1; padding: 10px 12px; }
         .prefix-wrap input:focus { border: none; }
         .foto-drop {
-            border: 2px dashed #1e40af;
+            border: 2px dashed #9095bb;
             border-radius: 12px;
             padding: 32px;
             text-align: center;
@@ -92,8 +92,8 @@
         .submit-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
+            background: linear-gradient(to left, #696969, #cfcfcf); /* terbitkan produk */
+            color: black;
             border: none;
             border-radius: 12px;
             font-family: 'Inter', sans-serif;
@@ -130,8 +130,8 @@
 
     <div class="container">
         <div class="page-title">
-            <h1>📝 Posting Iklan</h1>
-            <p>Isi informasi produkmu — gratis dan langsung tampil!</p>
+            <h1> Posting Iklan</h1>
+            <p>Isi informasi produkmu gratis dan langsung tampil!</p>
         </div>
 
         <form action="/posting" method="POST" enctype="multipart/form-data">
@@ -176,7 +176,7 @@
                 </div>
 
                 <div class="section-card">
-                    <div class="section-header">📋 Detail Produk</div>
+                    <div class="section-header">Detail Produk</div>
                     <div class="field">
                         <label>Kondisi</label>
                         <div class="kondisi-group">
@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="section-card">
-                    <div class="section-header">💰 Harga</div>
+                    <div class="section-header">Harga</div>
                     <div class="field">
                         <label>Harga Produk</label>
                         <div class="prefix-wrap">
@@ -203,31 +203,31 @@
                 </div>
 
                 <div class="section-card">
-                    <div class="section-header">📞 Kontak Penjual</div>
+                    <div class="section-header">Kontak Penjual</div>
                     <div class="field">
                         <label>WhatsApp</label>
                         <div class="prefix-wrap">
-                            <span>💬</span>
+                            <span></span>
                             <input type="text" name="whatsapp" placeholder="08xxxxxxxxxx">
                         </div>
                     </div>
                     <div class="field">
                         <label>Instagram</label>
                         <div class="prefix-wrap">
-                            <span>📸 @</span>
+                            <span> @</span>
                             <input type="text" name="instagram" placeholder="username">
                         </div>
                     </div>
                     <div class="field">
                         <label>TikTok</label>
                         <div class="prefix-wrap">
-                            <span>🎵 @</span>
+                            <span> @</span>
                             <input type="text" name="tiktok" placeholder="username">
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="submit-btn">🚀 Terbitkan Produk</button>
+            <button type="submit" class="submit-btn"> Terbitkan Produk</button>
         </form>
     </div>
 

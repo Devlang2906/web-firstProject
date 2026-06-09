@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Unpas Trade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to left, #696969, #cfcfcf);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: linear-gradient(to left, #696969, #cfcfcf);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .logo {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #ffff;
+            margin-bottom: 8px;
+        }
+        .logo span { color: #000000; }
+        .subtitle {
+            text-align: center;
+            color: #000000;
+            font-size: 0.9em;
+            margin-bottom: 32px;
+        }
+        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .field label { font-size: 0.85em; font-weight: 600; color: #555; }
+        .field input {
+            padding: 12px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .field input:focus { border-color: #00000000; }
+        .error {
+            background: linear-gradient(to right, #7f1d1d, #d6c5c5);
+            color: #000000;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            margin-bottom: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #696969, #cfcfcf);
+            color: black;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.88em;
+            color: #000000;
+        }
+        .link a { color: #ffffff; font-weight: 600; text-decoration: none; }
+        .link a:hover { text-decoration: underline; }
+        .back {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.85em;
+        }
+        .back a { color: #000000; text-decoration: none; }
+        .back a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">Unpas<span>Trade</span></div>
+        <div class="subtitle">Masuk dengan NIM dan password kamu</div>
+
+        {% if error %}
+        <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form action="/login" method="POST">
+            <div class="field">
+                <label>NIM</label>
+                <input type="text" name="nim" placeholder="Contoh: 25412345" required>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Password kamu..." required>
+            </div>
+            <button type="submit" class="btn"> Masuk</button>
+        </form>
+
+        <div class="link">
+            Belum punya akun? <a href="/register">Daftar sekarang</a>
+        </div>
+        <div class="back">
+            <a href="/">⬅ Kembali ke Beranda</a>
+        </div>
+    </div>
+</body>
+</html>
