@@ -167,6 +167,24 @@ def logout():
 @app.route("/admin-unpas")
 def admin():
     users = User.query.all()
+    produk_list = Produk.query.order_by(Produk.id.desc()).all()
+    return render_template("admin.html", users=users, produk_list=produk_list)
+
+@app.route("/admin-unpas/hapus-user/<int:id>")
+def admin_hapus_user(id):
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('admin'))
+
+@app.route("/admin-unpas/hapus-produk/<int:id>")
+def admin_hapus_produk(id):
+    produk = Produk.query.get_or_404(id)
+    db.session.delete(produk)
+    db.session.commit()
+    return redirect(url_for('admin'))
+def admin():
+    users = User.query.all()
     return render_template("admin.html", users=users)
 
 if __name__ == "__main__":
