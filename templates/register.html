@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar — Unpas Trade</title>
+    <title>DAFTAR REUSE CAMPUS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            background: linear-gradient(to left, #696969, #cfcfcf);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -17,7 +17,7 @@
             padding: 20px;
         }
         .card {
-            background: white;
+            background: linear-gradient(to left, #696969, #cfcfcf)
             border-radius: 20px;
             padding: 40px;
             width: 100%;
@@ -28,13 +28,13 @@
             text-align: center;
             font-size: 1.8em;
             font-weight: 800;
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 8px;
         }
-        .logo span { color: #f97316; }
+        .logo span { color: #000000; }
         .subtitle {
             text-align: center;
-            color: #888;
+            color: #000000;
             font-size: 0.9em;
             margin-bottom: 32px;
         }
@@ -49,10 +49,10 @@
             outline: none;
             transition: border 0.2s;
         }
-        .field input:focus { border-color: #1e40af; }
-        .field .hint { font-size: 0.78em; color: #aaa; }
+        .field input:focus { border-color: #000000; }
+        .field .hint { font-size: 0.78em; color: #000000; }
         .error {
-            background: #fee2e2;
+            background: linear-gradient(to left, #fee2e2, #cba4a4);
             color: #ef4444;
             padding: 10px 14px;
             border-radius: 10px;
@@ -62,7 +62,7 @@
         .btn {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            background: linear-gradient(to right, #696969, #cfcfcf);
             color: white;
             border: none;
             border-radius: 10px;
@@ -78,22 +78,22 @@
             text-align: center;
             margin-top: 20px;
             font-size: 0.88em;
-            color: #888;
+            color: #000000;
         }
-        .link a { color: #1e40af; font-weight: 600; text-decoration: none; }
+        .link a { color: #ffff; font-weight: 600; text-decoration: none; }
         .link a:hover { text-decoration: underline; }
         .back {
             text-align: center;
             margin-top: 12px;
             font-size: 0.85em;
         }
-        .back a { color: #888; text-decoration: none; }
+        .back a { color: #000000; text-decoration: none; }
         .back a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="logo">Unpas<span>Trade</span></div>
+        <div class="logo">REUSE<span></span></div>
         <div class="subtitle">Daftar akun dengan NIM kamu</div>
 
         {% if error %}
