@@ -105,19 +105,78 @@
         .footer { background: #1e293b; color: white; text-align: center; padding: 24px; font-size: 0.85em; opacity: 0.8; }
 
         /* RESPONSIVE */
+       /* RESPONSIVE */
         @media (max-width: 768px) {
-            .navbar { padding: 14px 20px; }
-            .navbar-menu { gap: 8px; }
-            .nav-item { padding: 6px 12px; font-size: 0.82em; }
-            .hero { padding: 60px 20px; }
-            .hero h1 { font-size: 1.8em; }
-            .fitur-section { padding: 40px 20px; }
-            .fitur-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .navbar {
+                padding: 14px 20px;
+            }
+            .navbar-menu {
+                gap: 6px;
+            }
+            .nav-item {
+                padding: 6px 10px;
+                font-size: 0.78em;
+            }
+            .btn-jual {
+                padding: 7px 14px;
+                font-size: 0.78em;
+            }
+            .hero {
+                padding: 60px 20px;
+            }
+            .hero h1 {
+                font-size: 1.8em;
+            }
+            .hero p {
+                font-size: 0.88em;
+            }
+            .fitur-section {
+                padding: 40px 20px;
+            }
+            .fitur-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .fitur-card {
+                padding: 16px;
+            }
+            .fitur-icon {
+                font-size: 1.5em;
+            }
         }
+
         @media (max-width: 480px) {
-            .fitur-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 1.5em; }
-            .hero-buttons { flex-direction: column; align-items: center; }
+            .navbar-logo {
+                font-size: 1.1em;
+            }
+            .navbar-menu {
+                gap: 4px;
+            }
+            .nav-item {
+                padding: 5px 8px;
+                font-size: 0.72em;
+            }
+            .btn-jual {
+                padding: 5px 10px;
+                font-size: 0.72em;
+            }
+            .hero h1 {
+                font-size: 1.4em;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            .fitur-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title h2 {
+                font-size: 1.3em;
+            }
         }
     </style>
 </head>
