@@ -4,12 +4,11 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import json
-
 import cloudinary
 import cloudinary.uploader
 
 app = Flask(__name__)
-import os
+
 database_url = os.environ.get('DATABASE_URL', 'postgresql://postgres:Gilang123@localhost:5432/unpas_db')
 if database_url.startswith('postgres://'):
     database_url = database_url.replace('postgres://', 'postgresql://', 1)
@@ -19,17 +18,21 @@ app.config['SECRET_KEY'] = 'unpastrade2026'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 db = SQLAlchemy(app)
 
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET')
+)
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Model User
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nim = db.Column(db.String(20), unique=True, nullable=False)
     nama = db.Column(db.String(200), nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
-# Model Produk
 class Produk(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(200), nullable=False)
@@ -55,18 +58,15 @@ class Produk(db.Model):
         lst = self.foto_list
         return lst[0] if lst else None
 
-# Halaman utama
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# Halaman produk
 @app.route("/produk")
 def semua_produk():
     produk_list = Produk.query.order_by(Produk.id.desc()).all()
     return render_template("produk.html", produk_list=produk_list)
 
-# Posting iklan
 @app.route("/posting", methods=["GET", "POST"])
 def posting():
     if request.method == "POST":
@@ -81,7 +81,7 @@ def posting():
         tiktok = request.form.get('tiktok', '')
         nim_penjual = session.get('nim', None)
 
-       foto_filenames = []
+        foto_filenames = []
         files = request.files.getlist('fotos')
         for file in files:
             if file and file.filename != '' and allowed_file(file.filename):
@@ -101,7 +101,6 @@ def posting():
         return redirect(url_for('semua_produk'))
     return render_template("posting.html")
 
-# Detail produk
 @app.route("/produk/<int:id>")
 def detail_produk(id):
     produk = Produk.query.get_or_404(id)
@@ -109,7 +108,6 @@ def detail_produk(id):
     bisa_hapus = nim_login and nim_login == produk.nim_penjual
     return render_template("detail_produk.html", produk=produk, bisa_hapus=bisa_hapus)
 
-# Hapus produk
 @app.route("/hapus/<int:id>")
 def hapus_produk(id):
     produk = Produk.query.get_or_404(id)
@@ -119,12 +117,10 @@ def hapus_produk(id):
         db.session.commit()
     return redirect(url_for('semua_produk'))
 
-# Serve foto
 @app.route("/foto/<filename>")
 def serve_foto(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-# Register
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -149,7 +145,6 @@ def register():
         return redirect(url_for('login'))
     return render_template("register.html")
 
-# Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -164,13 +159,11 @@ def login():
         return render_template("login.html", error="NIM atau password salah!")
     return render_template("login.html")
 
-# Logout
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for('index'))
 
-# Halaman admin
 @app.route("/admin-unpas")
 def admin():
     users = User.query.all()
