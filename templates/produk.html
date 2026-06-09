@@ -124,7 +124,7 @@
             <a href="/produk/{{ produk.id }}" class="card">
                 <div class="card-foto">
                     {% if produk.foto_utama %}
-                    <img src="/foto/{{ produk.foto_utama }}" alt="{{ produk.nama }}">
+                    <img src="{{ produk.foto_utama }}" alt="{{ produk.nama }}">
                     {% else %}
                     📦
                     {% endif %}

@@ -5,6 +5,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import json
 
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config(
+    cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddd6kptid'),
+    api_key = os.environ.get('CLOUDINARY_API_KEY', '128335663815891
+    api_secret = os.environ.get('CLOUDINARY_API_SECRET', '8KHs5t4eNnE6xBLfjIKidEz1CbA
+)
+
 app = Flask(__name__)
 import os
 database_url = os.environ.get('DATABASE_URL', 'postgresql://postgres:Gilang123@localhost:5432/unpas_db')
@@ -78,13 +87,12 @@ def posting():
         tiktok = request.form.get('tiktok', '')
         nim_penjual = session.get('nim', None)
 
-        foto_filenames = []
+       foto_filenames = []
         files = request.files.getlist('fotos')
         for file in files:
             if file and file.filename != '' and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                foto_filenames.append(filename)
+                result = cloudinary.uploader.upload(file)
+                foto_filenames.append(result['secure_url'])
 
         produk_baru = Produk(
             nama=nama, nama_penjual=nama_penjual,
