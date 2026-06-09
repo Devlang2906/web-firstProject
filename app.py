@@ -80,8 +80,7 @@ def posting():
         instagram = request.form.get('instagram', '')
         tiktok = request.form.get('tiktok', '')
         nim_penjual = session.get('nim', None)
-
-      foto_filenames = []
+        foto_filenames = []
         files = request.files.getlist('fotos')
         for file in files:
             if file and file.filename != '':
@@ -129,14 +128,11 @@ def register():
         nim = request.form.get('nim', '')
         nama = request.form.get('nama', '')
         password = request.form.get('password', '')
-
         if not nim.isdigit():
             return render_template("register.html", error="NIM harus berupa angka!")
-
         existing = User.query.filter_by(nim=nim).first()
         if existing:
             return render_template("register.html", error="NIM sudah terdaftar!")
-
         user_baru = User(
             nim=nim,
             nama=nama,
@@ -152,7 +148,6 @@ def login():
     if request.method == "POST":
         nim = request.form.get('nim', '')
         password = request.form.get('password', '')
-
         user = User.query.filter_by(nim=nim).first()
         if user and check_password_hash(user.password, password):
             session['nim'] = user.nim
@@ -185,9 +180,6 @@ def admin_hapus_produk(id):
     db.session.delete(produk)
     db.session.commit()
     return redirect(url_for('admin'))
-def admin():
-    users = User.query.all()
-    return render_template("admin.html", users=users)
 
 if __name__ == "__main__":
     with app.app_context():
