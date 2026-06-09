@@ -168,6 +168,12 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+# Halaman admin
+@app.route("/admin-unpas")
+def admin():
+    users = User.query.all()
+    return render_template("admin.html", users=users)
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
